@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\PostController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Admin Routes Prefix dashboard
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -14,6 +15,6 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('dashboard.index');
 
-Auth::routes();
+Route::resource('posts', PostController::class);
