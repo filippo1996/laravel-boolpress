@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -34,13 +36,16 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
+
+        /* la facciamo direttamente sulla classe request StorePostRequest
         $data['slug'] = Str::slug($data['title'], '-');
+        */
 
         $post = new Post();
         $post->fill($data);
@@ -79,14 +84,14 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdatePostRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $data = $request->all();
-        $data['slug'] = Str::slug($data['title'],'-');
+        $data = $request->validated();
+        //$data['slug'] = Str::slug($data['title'],'-');
         $post->update($data);
 
         return redirect()->route('posts.index');

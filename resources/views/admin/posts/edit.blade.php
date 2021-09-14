@@ -6,17 +6,31 @@
     <x-admin.title title="Edit Post"/>
     <!-- end title page -->
 
+    <!-- show errors request -->
+    @include('admin.partials.errors-request')
+    <!-- end show errors request -->
+
     <form action="{{ route('posts.update', $post->id) }}" method="post">
         @csrf
         @method('PATCH')
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" name="title" class="form-control" id="title" value="{{ $post->title }}" aria-describedby="title">
+          <input type="text" name="title" class="form-control" id="title" value="{{ old('title', $post->title) }}" aria-describedby="title">
           <div id="emailHelp" class="form-text">Modifica il tuo titolo</div>
+
+          @error('title')
+            <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+
         </div>
         <div class="form-floating mb-3">
-            <textarea class="form-control" name="content" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{ $post->content }}</textarea>
+            <textarea class="form-control" name="content" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{ old('content', $post->content) }}</textarea>
             <label for="floatingTextarea2">Comments</label>
+
+            @error('content')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form> 
