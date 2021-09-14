@@ -20,7 +20,13 @@
         let posts = document.querySelectorAll('.btn-danger');
         posts.forEach( ele => {
             ele.addEventListener('click', function(event){
-                event.preventDefault();
+                
+                let status = confirm('Sicuro di voler eliminare questo post?');
+                if(!status){
+                    event.preventDefault();
+                    return false;
+                }
+
                 let id = this.closest('tr[data-post]').dataset.post;
                 
                 let form = document.getElementById('post-delete');
